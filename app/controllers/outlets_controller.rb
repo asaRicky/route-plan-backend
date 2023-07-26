@@ -1,0 +1,2 @@
+class OutletsController < ApplicationController
+end
