@@ -1,0 +1,2 @@
+class RouteVisitsController < ApplicationController
+end
