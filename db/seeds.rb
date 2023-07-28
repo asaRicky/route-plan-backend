@@ -1,9 +1,0 @@
-# seeding data
-# creating users
- 
-
-
-
-
-
-
