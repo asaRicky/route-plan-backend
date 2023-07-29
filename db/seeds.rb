@@ -5,7 +5,7 @@ user1 = User.create!(username: 'merchandiser1', email: 'merchandiser1@example.co
 user2 = User.create!(username: 'salesmanager1', email: 'salesmanager1@example.com', password_digest: 'password', role: 'sales_manager')
 
 # Create sample Merchandiser
-merchandiser1 = Merchandiser.create!(user: user1, name: 'John Doe', contact_number: '1234567890')
+merchandiser1 = Merchandiser.create!(user: user1, name: 'John Dee', contact_number: '1234567890')
 
 # Create sample Sales Manager
 salesmanager1 = SalesManager.create!(user: user2, name: 'Jane Smith', contact_number: '9876543210')
