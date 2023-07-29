@@ -1,50 +1,51 @@
 class UsersController < ApplicationController
-    # Display all users
-    def index
-        users = User.all
-        render json: users
-    end
+  before_action :set_user, only: [:show, :update, :destroy]
 
-    # Display single user
-    def show
-        @user = User.find(params[:id])
-    end
+  # GET /users
+  def index
+    @users = User.all
+    render json: @users
+  end
 
-    # Create new user
-    def create
-        user = User.create(user_params)
-        if user.valid?
-            session[:user_id] = user_id
-            render json: user, status: :created
-        else
-            render json: {errors: user.errors.full_messages}, status: :unprocessable_entity
-        end
-    end
+  # GET /users/:id
+  def show
+    render json: @user
+  end
 
-    def show
-        render json: current_user
-    end
+  # POST /users
+  def create
+    @user = User.new(user_params)
 
-    def update
-        if current_user.update(user_params)
-          render json: { status: 'SUCCESS', message: 'User updated successfully', data: @current_user }
-        else
-          render json: { status: 'ERROR', message: 'Failed to update user', data: @current_user.errors }
-        end
+    if @user.save
+      render json: @user, status: :created
+    else
+      render json: @user.errors, status: :unprocessable_entity
     end
-    
-      def destroy
-        if current_user.destroy
-          render json: { status: 'SUCCESS', message: 'User deleted successfully', data: @current_user }
-        else
-          render json: { status: 'ERROR', message: 'Failed to delete user', data: @current_user.errors }
-        end
-    end
+  end
 
-    private
-
-    def user_params
-        params.require(:user).permit(:name, :email, :password, :role)
+  # PATCH/PUT /users/:id
+  def update
+    if @user.update(user_params)
+      render json: @user
+    else
+      render json: @user.errors, status: :unprocessable_entity
     end
-        
+  end
+
+  # DELETE /users/:id
+  def destroy
+    @user.destroy
+    head :no_content
+  end
+
+  private
+
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  def user_params
+    params.require(:user).permit(:username, :email, :password, :role)
+  end
 end
+
