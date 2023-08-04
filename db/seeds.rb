@@ -1,8 +1,8 @@
 # db/seeds.rb
 
 # Create sample Users
-user1 = User.create!(username: 'merchandiser1', email: 'merchandiser1@example.com', password_digest: 'password', role: 'merchandiser')
-user2 = User.create!(username: 'salesmanager1', email: 'salesmanager1@example.com', password_digest: 'password', role: 'sales_manager')
+user1 = User.create!(username: 'merchandiser1', email: 'merchandiser1@example.com', password_digest: '123456', role: 'merchandiser')
+user2 = User.create!(username: 'salesmanager1', email: 'salesmanager1@example.com', password_digest: '432156', role: 'sales_manager')
 
 # Create sample Merchandiser
 merchandiser1 = Merchandiser.create!(user: user1, name: 'John Dee', contact_number: '1234567890')

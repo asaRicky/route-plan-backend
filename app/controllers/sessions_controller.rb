@@ -1,25 +1,17 @@
 class SessionsController < ApplicationController
-  def authenticate
-    user = User.find_by(email: params[:email])
-    if user.nil?
-      render json: { errors: "User not found" }, status: 404
-      return
-    end
-
-    if user.authenticated?(params[:password])
-      session[:user_id] = user.id
-      render json: { message: "Logged in successfully" }
-    else
-      render json: { errors: "Invalid password" }, status: 401
-    end
-  rescue => e
-    render json: { errors: e.message }, status: :unprocessable_entity
-  end
-
-  def destroy
-    session[:user_id] = nil
-    render json: { message: "Logged out successfully" }
-  end
-  rescue => e
-    render json: { errors: e.message }, status: :unprocessable_entity
+  def create
+      user = User.find_by(username: params[:username])
+      if user&.authenticate(params[:password])
+          session[:user_id] = user.id
+          render json: user, status: :created
+      else
+          render json: {errors: ["Invalid username or password"]}, status: :unauthorized
+      end
+end
+def destroy
+return render json: {errors: ["Not authorized"]}, status: :unauthorized unless session.include? :user_id
+  session.delete :user_id
+  head :no_content
+    #return render json: {errors: ["Not authorized"]}, status: :unauthorized unless session.include? :user_id
+end
 end
